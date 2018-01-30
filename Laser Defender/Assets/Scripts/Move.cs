@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Move : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		Camera camera = GetComponent<Camera>();
-		Vector3 view = camera.ViewportToWorldPoint(new Vector3(1, 1, camera.nearClipPlane));
-		print(view);
-	}
-
 	public float mvSpeed = 5f;
 
 	float xmin = -5f;
 	float xmax = 5f;
+	float padding = 1f;
+
+	// Use this for initialization
+	void Start () {
+		float dis = transform.position.z - Camera.main.transform.position.z;
+		Vector3 leftmost = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, dis));
+		Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, dis));
+		xmin = leftmost.x + padding;
+		xmax = rightmost.x - padding;
+	}
 
 	// Update is called once per frame
 	void Update () {
